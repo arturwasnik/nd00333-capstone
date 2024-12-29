@@ -114,7 +114,7 @@ I was able also to test the endpoint using the Requests Python library in the au
 ![AutoML Best Model Endpoint 3](./screenshots/automl_endpoint_01.PNG)
 
 ## Screen Recording
-The screencast for this project can be found here: //TODO
+The screencast for this project can be found here: https://screenrec.com/share/nHIq2QFysP
 
 ## Comments and future improvements
 
