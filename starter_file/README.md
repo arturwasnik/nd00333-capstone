@@ -50,6 +50,32 @@ I am using the stored dataset in the train.py script when training the HyperDriv
 
 ## Automated ML
 
+An overview of the AutoML settings and configuration:
+
+Settings:
+
+- n_cross_validations: this parameter sets how many cross validations to perform based on the number of subsets. I set that value to 2
+- primary_metric: I chose 'accuracy' as the default metric for the experiment
+- enable_early_stopping: It enables early termination of the experiment when the score is not improving between runs thus saving resources
+- max_concurrent_iterations: Defines max number of iterations executed in parallel. I set it to 4
+- experiment_timeout_minutes: Defines how long the experiment should continue. I set it to 30 minutes
+- verbosity: logging verbosity level. I set it to INFO
+  
+Configuration:
+
+- compute_target: Azure ML compute cluster which will be used for the experiment
+- task: Type of experiment. In our project we use 'classification'
+- training_dataset: Datset to be used during the experiment
+- label_column_name: Target column name for which the prediction is done
+- path: Project path
+- debug_log: Log file name
+- featurization: Defines if the featurization step should be performed automatically 'auto' or not 'off'. I set it to 'auto'
+
+In the config we could also set:
+
+- enable_onnx_compatible_models: Whether to enable or disable enforcing the ONNX-compatible models (defaults to False)
+- blocked_models: collection of algorithms we want to skip from AutoML during training e.g. due to the compatibility issues
+
 The AutoML settings with config descriptions I have used:
 ![AutoML Settings](./screenshots/automl_settings.PNG)
 
@@ -66,6 +92,10 @@ Best AutoML model details from the notebook:
 
 Best AutoML model from Azure Machine Learning Studio:
 ![AutoML Best Model 2](./screenshots/automl_best_model_02.PNG)
+
+I also ran the RunDetails widget:
+![AutoML Best Model RunDetails2](./screenshots//automl_rundetails2.png)
+Unfortunately, due to some package incompatibilities, I was not able to make the widget working as expected. I had exactly the same issue with the Runtime widget in the previous project within this Nanodegree, in the Machine Learning Operations course. I tried to upgrade existing packages, downgrade them, use different combinations of versions of packages as suggested on Stackoverflow, followed Microsoft examples on https://github.com/Azure/MachineLearningNotebooks as well as Microsoft recommendations on https://learn.microsoft.com/en-us/python/api/azureml-widgets/azureml.widgets.rundetails?view=azure-ml-py but without any luck. I was using latest Azure Machine Learning Studio with Python 3.8 and AutoML which can be seen on the screenshot.
 
 The RunDetails widget details of the best AutoML model:
 ![AutoML Best Model RunDetails](./screenshots/automl_rundetails.PNG)
@@ -96,6 +126,10 @@ Best model details from the notebook:
 ![HyperDrive Best Model](./screenshots/hyperdrive_best_model.PNG)
 ![HyperDrive Best Model2](./screenshots/hyperdrive_best_model_02.PNG)
 
+I also ran the RunDetails widget:
+![HyperDrive Best Model RunDetails2](./screenshots//hyperdrive_rundetails2.png)
+Unfortunately, due to some package incompatibilities, I was not able to make the widget working as expected. I had exactly the same issue with the Runtime widget in the previous project within this Nanodegree, in the Machine Learning Operations course. I tried to upgrade existing packages, downgrade them, use different combinations of versions of packages as suggested on Stackoverflow, followed Microsoft examples on https://github.com/Azure/MachineLearningNotebooks as well as Microsoft recommendations on https://learn.microsoft.com/en-us/python/api/azureml-widgets/azureml.widgets.rundetails?view=azure-ml-py but without any luck. I was using latest Azure Machine Learning Studio with Python 3.8 and AutoML which can be seen on the screenshot.
+
 The RunDetails widget details of the best model:
 ![HyperDrive Best Model RunDetails](./screenshots/hyperdrive_rundetails.PNG)
 
@@ -114,10 +148,11 @@ I was able also to test the endpoint using the Requests Python library in the au
 ![AutoML Best Model Endpoint 3](./screenshots/automl_endpoint_01.PNG)
 
 ## Screen Recording
-The screencast for this project can be found here: https://screenrec.com/share/nHIq2QFysP
+The screencast for this project can be found here: //TODO
 
 ## Comments and future improvements
 
-- increase the training time for AutoML model. I think it would be useful to increase the training time of this model. I suspect this is one of the reasons why the AutoML model had a slightly lower score compering to the HyperDrive model
+- increase the training time for AutoML model. I think it would be useful to increase the training time of this model. I suspect this is one of the reasons why the AutoML model had a slightly lower score, though the difference is very small, compering to the HyperDrive model
 - increase the sample dataset. Currently the dataset has only 299 rows which is quite small. With bigger dataset, models could be better trained and get better scoring. I think this is one of the reasons why, to my surprise, features like smoking and high blood pressure were the least contributing ones.
 - use 'Weighted Accuracy' as the primary metrics instead of 'Accuracy'. We could try to use the 'Weighted Accuracy' metrics that could help with the class imbalance we have in the dataset (as per https://www.sciencedirect.com/topics/computer-science/weighted-accuracy)
+- investigate the Runtime widget incompatibility issues with the latest Azure Machine Learning Studio when using Python 3.8 and AzureML. It does seem that, despite of number of tries with different versions of packages, the Runtime widget has some incompatibility issues when running in notebooks in Azure ML Studio with Python 3.8 and AzureML. I think it would be useful to investigate it further, perhaps by an experience machine learning engineer and give some hints for students in the course.
